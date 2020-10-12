@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_signed_in_user"
+    app:startDestination="@id/signedInUserMainFragment">
+
+    <fragment
+        android:id="@+id/signedInUserMainFragment"
+        android:name="com.openjobs.openjobs.SignedInUserMainFragment"
+        android:label="SignedInUserMainFragment"
+        tools:layout="@layout/signed_in_user_main_fragment">
+        <action
+            android:id="@+id/action_signedInUserMainFragment_to_createWorkerRequestFragment"
+            app:destination="@id/createWorkerRequestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createWorkerRequestFragment"
+        android:name="com.openjobs.openjobs.CreateWorkerRequestFragment"
+        android:label="create_worker_request_fragment"
+        tools:layout="@layout/create_worker_request_fragment" >
+        <action
+            android:id="@+id/action_createWorkerRequestFragment_to_confirmationFragment"
+            app:destination="@id/confirmationFragment"
+            app:popUpTo="@id/signedInUserMainFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/confirmationFragment"
+        android:name="com.openjobs.openjobs.ConfirmationFragment"
+        android:label="fragment_confirmation"
+        tools:layout="@layout/fragment_confirmation" >
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.openjobs.openjobs.ShowUserProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/show_user_profile_fragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_editUserProfileFragment"
+            app:destination="@id/editUserProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editUserProfileFragment"
+        android:name="com.openjobs.openjobs.EditUserProfileFragment"
+        android:label="edit_user_profile_fragment"
+        tools:layout="@layout/edit_user_profile_fragment">
+        <argument
+            android:name="name"
+            app:argType="string"
+            android:defaultValue="Name not set"/>
+        <argument
+            android:name="address"
+            app:argType="string"
+            android:defaultValue="address not set"/>
+    </fragment>
+
+
+</navigation>
