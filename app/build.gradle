@@ -5,6 +5,14 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Neeraj\\androidMainKeyStore.jks')
+            storePassword 'l30062306B'
+            keyAlias 'mainKey'
+            keyPassword 'r10030801Y'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -16,6 +24,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {

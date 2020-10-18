@@ -19,7 +19,6 @@ class SignedInUserMainFragment : Fragment(), View.OnClickListener, WorkerRequest
 
     private lateinit var viewModel: SignedInUserMainViewModel
     private lateinit var workerRequestListAdapter: WorkerRequestsListAdapter
-    private var isFirstTime = true
     private val TAG = "SignedInUserMainFragment"
 
     override fun onCreateView(
