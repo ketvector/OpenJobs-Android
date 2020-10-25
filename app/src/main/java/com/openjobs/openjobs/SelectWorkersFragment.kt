@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import kotlinx.android.synthetic.main.select_workers_fragment.*
 
 class SelectWorkersFragment : Fragment() , View.OnClickListener {
@@ -28,6 +29,8 @@ class SelectWorkersFragment : Fragment() , View.OnClickListener {
         viewModel = ViewModelProviders.of(requireActivity()).get(CreateWorkerRequestViewModel::class.java)
         selectWorkerListAdapter = SelectWorkerListAdapter()
         workerCountList.adapter = selectWorkerListAdapter
+        val dividerItemDecoration = DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL)
+        workerCountList.addItemDecoration(dividerItemDecoration)
         viewModel.getWorkerOptions()
         viewModel.workerOptionsList.observe(viewLifecycleOwner, Observer { it ->
             selectWorkerListAdapter.setList(it)
