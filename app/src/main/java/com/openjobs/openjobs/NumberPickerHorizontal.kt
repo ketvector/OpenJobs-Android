@@ -14,6 +14,12 @@ class HorizontalNumberPicker(context: Context?, @Nullable attrs: AttributeSet?) 
     var min = 0
     var max = 20
 
+    private var listener : NumberPickerCountChangeListener? = null
+
+    fun setListener(listener: NumberPickerCountChangeListener){
+        this.listener = listener
+    }
+
     /***
      * HANDLERS
      */
@@ -37,8 +43,9 @@ class HorizontalNumberPicker(context: Context?, @Nullable attrs: AttributeSet?) 
         get() {
             if (et_number != null) {
                 try {
-                    val value = et_number.text.toString()
-                    return value.toInt()
+                    val value = et_number.text.toString().toInt()
+                    listener?.onCountChanged(value)
+                    return value
                 } catch (ex: NumberFormatException) {
                     Log.e("HorizontalNumberPicker", ex.toString())
                 }

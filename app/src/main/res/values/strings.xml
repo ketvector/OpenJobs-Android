@@ -6,7 +6,7 @@
     <string name="select_number_of_workers">Number of workers:</string>
     <string name="number_of_skilled_workers_label">Skilled workers </string>
     <string name="number_of_unskilled_workers_label">Unskilled workers </string>
-    <string name="find_workers_submit_button_label">Find Workers</string>
+    <string name="find_workers_submit_button_label">NEXT</string>
     <string name="request_workers_form_invalid_data">Please enter valid data in form!</string>
 
     <string name="show_number_of_skilled_workers">Skilled Workers: </string>

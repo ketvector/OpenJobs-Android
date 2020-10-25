@@ -11,18 +11,8 @@
         android:label="SignedInUserMainFragment"
         tools:layout="@layout/signed_in_user_main_fragment">
         <action
-            android:id="@+id/action_signedInUserMainFragment_to_createWorkerRequestFragment"
-            app:destination="@id/createWorkerRequestFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/createWorkerRequestFragment"
-        android:name="com.openjobs.openjobs.CreateWorkerRequestFragment"
-        android:label="create_worker_request_fragment"
-        tools:layout="@layout/create_worker_request_fragment" >
-        <action
-            android:id="@+id/action_createWorkerRequestFragment_to_confirmationFragment"
-            app:destination="@id/confirmationFragment"
-            app:popUpTo="@id/signedInUserMainFragment"/>
+            android:id="@+id/action_signedInUserMainFragment_to_selectWorkersFragment"
+            app:destination="@id/selectWorkersFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"
@@ -52,6 +42,24 @@
             android:name="address"
             app:argType="string"
             android:defaultValue="address not set"/>
+    </fragment>
+    <fragment
+        android:id="@+id/addDetailsFragment"
+        android:name="com.openjobs.openjobs.AddDetailsFragment"
+        android:label="add_details_fragment"
+        tools:layout="@layout/add_details_fragment" >
+        <action
+            android:id="@+id/action_addDetailsFragment_to_confirmationFragment"
+            app:destination="@id/confirmationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectWorkersFragment"
+        android:name="com.openjobs.openjobs.SelectWorkersFragment"
+        android:label="select_workers_fragment"
+        tools:layout="@layout/select_workers_fragment" >
+        <action
+            android:id="@+id/action_selectWorkersFragment_to_addDetailsFragment"
+            app:destination="@id/addDetailsFragment" />
     </fragment>
 
 

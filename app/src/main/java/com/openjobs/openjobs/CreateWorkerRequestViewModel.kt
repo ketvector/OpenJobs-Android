@@ -2,31 +2,41 @@ package com.openjobs.openjobs
 
 import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CreateWorkerRequestViewModel : ViewModel() {
 
     val submitRequestResult = MutableLiveData<Boolean>()
     private val TAG = "CreateWorkerRequestViewModel"
-    var requestListener : ListenerRegistration? = null
+    private var userProfileRequestListener : ListenerRegistration? = null
     val address = MutableLiveData<String?>()
+    var workerOptionsList = MutableLiveData<List<WorkerOption>>()
+    lateinit var selections : Map<String,Int>
+    var userGivenAddress : String ? = null
+    var userGivenDate : Date ? = null
 
 
 
     @SuppressLint("LongLogTag")
-    fun submitRequest(workerRequest : WorkerRequest){
+    fun submitRequest(){
         val db = Firebase.firestore
+        val workerRequest = WorkerRequest()
         workerRequest.creatorUid = FirebaseAuth.getInstance().currentUser?.uid
         workerRequest.requestState = DatabaseConstants.WORKER_REQUESTS_STATE_APPLIED
+        userGivenDate?.let{
+            workerRequest.date = it
+        }
+        workerRequest.address = userGivenAddress
+        workerRequest.listOfWorkerOptions = selections
+
 
         db.
             collection(DatabaseConstants.WORKER_REQUESTS_COLLECTION)
@@ -46,7 +56,7 @@ class CreateWorkerRequestViewModel : ViewModel() {
         val userUid = FirebaseAuth.getInstance().currentUser?.uid
         val db = Firebase.firestore
 
-        requestListener =  db
+        userProfileRequestListener =  db
             .collection(DatabaseConstants.USER_PROFILE_COLLECTION)
             .document(userUid ?: "NOEXIST")
             .addSnapshotListener{snapshot, e ->
@@ -65,8 +75,26 @@ class CreateWorkerRequestViewModel : ViewModel() {
             }
     }
 
+    @SuppressLint("LongLogTag")
+    fun getWorkerOptions(){
+        val db = Firebase.firestore
+
+        db
+            .collection(DatabaseConstants.WORKER_OPTIONS_COLLECTION)
+            .get()
+            .addOnSuccessListener { collection ->
+                val list = ArrayList<WorkerOption>()
+                for(document in collection){
+                    list.add(document.toObject<WorkerOption>())
+                }
+                workerOptionsList.value = list
+            }
+            .addOnFailureListener { e -> Log.e(TAG, e.toString()) }
+
+    }
+
     override fun onCleared() {
-        requestListener?.remove()
+        userProfileRequestListener?.remove()
         super.onCleared()
     }
 

@@ -15,6 +15,7 @@ class SignedInUserMainViewModel : ViewModel() {
     val TAG = "SignedInUserMainViewModel"
     val listOfWorkerRequests = MutableLiveData<List<WorkerRequestDocumentWrapper>>()
     var requestListener : ListenerRegistration? = null
+    var mapIdToName = MutableLiveData<MutableMap<String,String>>()
 
     @SuppressLint("LongLogTag")
     fun getWorkerRequestsForThisUser(){
@@ -49,6 +50,24 @@ class SignedInUserMainViewModel : ViewModel() {
             }
 
 
+    }
+
+    @SuppressLint("LongLogTag")
+    fun getIdToNameMap(){
+        val db = Firebase.firestore
+
+        db
+            .collection(DatabaseConstants.WORKER_OPTIONS_COLLECTION)
+            .get()
+            .addOnSuccessListener {collection ->
+                val map = mutableMapOf<String,String>()
+                for(document in collection){
+                    val workerOption = document.toObject<WorkerOption>()
+                    map[workerOption.id] = workerOption.label
+                }
+                mapIdToName.value = map
+            }
+            .addOnFailureListener { e -> Log.e(TAG,e.toString()) }
     }
 
     @SuppressLint("LongLogTag")
