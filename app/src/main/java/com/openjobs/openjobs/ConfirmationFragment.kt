@@ -25,7 +25,8 @@ class ConfirmationFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if(v?.id == button.id){
-            findNavController().navigateUp()
+            val action = ConfirmationFragmentDirections.actionConfirmationFragmentToSignedInUserMainFragment()
+            findNavController().navigate(action)
         }
     }
 
