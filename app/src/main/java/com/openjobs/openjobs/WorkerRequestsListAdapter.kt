@@ -48,12 +48,26 @@ class WorkerRequestsListAdapter(val onClickListener: WorkerRequestCardClickListe
         fun bind(workerRequestWrapper: WorkerRequestDocumentWrapper?, idToNameMap : Map<String,String>?) {
             this.idToNameMap = idToNameMap
             val workerRequest = workerRequestWrapper?.workerRequest
-            itemView.deleteButton.setOnClickListener{
-                onClickListener.onDeleteButtonClicked(workerRequestWrapper?.docId)
+            if(isDeletable(workerRequest)){
+                itemView.deleteButton.visibility = View.VISIBLE
+                itemView.meetMessage.visibility = View.GONE
+                itemView.deleteButton.setOnClickListener{
+                    onClickListener.onDeleteButtonClicked(workerRequestWrapper?.docId)
+                }
+            }else{
+                itemView.deleteButton.visibility = View.GONE
+                itemView.meetMessage.visibility = View.VISIBLE
+                itemView.meetMessage.text = workerRequest?.meetMessage
             }
+
+
             itemView.date.text = "Date: " + getDateString(workerRequest?.date)
             itemView.status.text = "Status: " + getStatusText(workerRequest)
             itemView.count.text = getNumberOfWorkersText(workerRequest)
+        }
+
+        private fun isDeletable(workerRequest: WorkerRequest?) : Boolean {
+            return workerRequest?.requestState != DatabaseConstants.WORKER_REQUESTS_STATE_APPROVED
         }
 
         private fun getNumberOfWorkersText(workerRequest: WorkerRequest?) :String? {

@@ -43,10 +43,16 @@ class SelectWorkersFragment : Fragment() , View.OnClickListener {
 
     override fun onClick(v: View?) {
         if(v?.id == submitButton.id ){
-            var isDataValid = true
+            viewModel.selections  = selectWorkerListAdapter.selectionCounts
+
+            var isDataValid = false
+            for(value in  viewModel.selections.values){
+                if(value > 0){
+                    isDataValid = true
+                }
+            }
 
             if(isDataValid){
-                viewModel.selections  = selectWorkerListAdapter.selectionCounts
                 val action = SelectWorkersFragmentDirections.actionSelectWorkersFragmentToAddDetailsFragment()
                 findNavController().navigate(action)
             }else{

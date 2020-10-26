@@ -46,7 +46,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:textSize="20sp"
-        android:text="Not Set"
+        android:text="Click edit button below to set"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneLabel" />
 
@@ -68,7 +68,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:textSize="20sp"
-        android:text="Not Set Yet"
+        android:text="Click edit button below to set"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameLabel" />
 
@@ -90,7 +90,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:textSize="20sp"
-        android:text="Not Set Yet"
+        android:text="Click edit button below to set"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addressLabel" />
 

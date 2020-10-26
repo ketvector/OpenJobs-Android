@@ -6,9 +6,8 @@
         android:title="Requests"
         android:icon="@drawable/ic_baseline_list_24"/>
 
-
     <item
-        android:id="@id/selectWorkersFragment"
+        android:id="@id/searchContextFragment"
         android:title="Search"
         android:icon="@drawable/ic_baseline_search_24"/>
 
@@ -16,6 +15,5 @@
         android:id="@id/profileFragment"
         android:title="Profile"
         android:icon="@drawable/ic_baseline_account_circle_24"/>
-
 
 </menu>

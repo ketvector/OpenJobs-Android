@@ -27,8 +27,12 @@ class EditUserProfileFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(EditUserProfileViewModel::class.java)
-        editTextName.editText?.setText(args.name)
-        editTextDefaultAddress.editText?.setText(args.address)
+        if(!args.name.equals("Click edit button below to set")){
+            editTextName.editText?.setText(args.name)
+        }
+        if(!args.address.equals("Click edit button below to set")){
+            editTextDefaultAddress.editText?.setText(args.address)
+        }
         submitButton.setOnClickListener(this)
         viewModel.submitRequestStatus.observe(viewLifecycleOwner, Observer {
             if(it){

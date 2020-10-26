@@ -1,11 +1,14 @@
 package com.openjobs.openjobs
 
+import android.content.DialogInterface
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.add_details_fragment.*
@@ -32,34 +35,34 @@ class AddDetailsFragment : Fragment(), View.OnClickListener {
         viewModel.getUserProfile()
         viewModel.address.observe(viewLifecycleOwner, Observer { editTextTextPostalAddress.editText?.setText(it) })
         submitButton.setOnClickListener(this)
-        // TODO: Use the ViewModel
     }
 
-    private fun getCurrentSelectedDate() : Date {
-        return when(dateRadioGroup.checkedRadioButtonId){
-            todayRadio.id -> Date()
-            tommorowRadio.id -> getTommorowsDate()
-            else -> Date()
-        }
-    }
-
-    private fun getTommorowsDate(): Date
-    {
-        val calendar = GregorianCalendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR,1)
-        calendar.set(Calendar.HOUR_OF_DAY,7)
-        return calendar.time
-    }
 
     override fun onClick(v: View?) {
         if(v?.id == submitButton.id){
-            val date = getCurrentSelectedDate()
             val address = editTextTextPostalAddress.editText?.text?.toString()
             viewModel.userGivenAddress = address
-            viewModel.userGivenDate = date
-            viewModel.submitRequest() // TODO : Listen for result and take appropriate action
-            val action = AddDetailsFragmentDirections.actionAddDetailsFragmentToConfirmationFragment()
-            findNavController().navigate(action)
+            val shortDescription = extraInformation.editText?.text?.toString()
+            viewModel.userGivenShortDescription = shortDescription
+            val additionalMessage = additionalMessage.editText?.text?.toString()
+            viewModel.userGivenAdditionalMessage = additionalMessage
+            AlertDialog
+                .Builder(requireContext())
+                .setTitle("Confirm Your Request")
+                .setMessage(viewModel.getConfirmationMessage())
+                .setPositiveButton("Confirm", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        viewModel.submitRequest() // TODO : Listen for result and take appropriate action
+                        val action = AddDetailsFragmentDirections.actionAddDetailsFragmentToConfirmationFragment()
+                        findNavController().navigate(action)
+                    }
+                })
+                .setNegativeButton("Deny", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        Log.e("AddDetailsFragment", "Denied by user")
+                    }
+                }).show()
+
         }
     }
 

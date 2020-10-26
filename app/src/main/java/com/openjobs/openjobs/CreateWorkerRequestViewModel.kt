@@ -9,6 +9,8 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import java.lang.StringBuilder
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -22,7 +24,62 @@ class CreateWorkerRequestViewModel : ViewModel() {
     lateinit var selections : Map<String,Int>
     var userGivenAddress : String ? = null
     var userGivenDate : Date ? = null
+    var userGivenShortDescription : String? = null
+    var userGivenAdditionalMessage : String? = null
 
+
+    val locations = MutableLiveData<List<SimpleLocation>>()
+    lateinit var currentLocation : SimpleLocation
+
+    fun getConfirmationMessage() : String ?{
+        return "Workers count\n" + getNumWorkersText() + "\n\n" + "Location : " + currentLocation.name + "\nDate : " + getDateString(userGivenDate)
+    }
+
+    private fun getDateString(date : Date?) : String?{
+        date?.let {
+            val format = SimpleDateFormat("dd/MM/yyyy" , Locale.getDefault())
+            return format.format(date)
+        }
+        return null
+    }
+
+    private fun getNumWorkersText() : String?{
+        workerOptionsList.value?.let {list ->
+            val stringBuilder = StringBuilder()
+            for(workerOption in list){
+                selections[workerOption.id]?.let {count ->
+                    if(count > 0){
+                        stringBuilder.append(workerOption.label + ": " + count + getRateMessage(workerOption) + "\n")
+                    }
+                }
+            }
+            return stringBuilder.toString()
+        }
+        return null
+    }
+
+    private fun getRateMessage(workerOption: WorkerOption) : String{
+        if(workerOption.price > 0){
+           return " (at Rs " + workerOption.price + "/" + workerOption.unit.toString() + " per worker)"
+        }
+        else {
+            return workerOption.unit?:""
+        }
+
+    }
+
+    @SuppressLint("LongLogTag")
+    fun getAvailableLocations(){
+
+        val db = Firebase.firestore
+        db.collection(DatabaseConstants.SIMPLE_LOCATIONS_COLLECTION).get().addOnSuccessListener {
+            val list : ArrayList<SimpleLocation> = ArrayList()
+            for(location in it){
+                list.add(location.toObject())
+            }
+            locations.value = list
+        }.addOnFailureListener { e -> Log.e(TAG,e.toString()) }
+    }
 
 
     @SuppressLint("LongLogTag")
@@ -36,7 +93,9 @@ class CreateWorkerRequestViewModel : ViewModel() {
         }
         workerRequest.address = userGivenAddress
         workerRequest.listOfWorkerOptions = selections
-
+        workerRequest.shortDescription = userGivenShortDescription
+        workerRequest.meetMessage = currentLocation.defaultMeetMessage
+        workerRequest.additionalMessage = userGivenAdditionalMessage
 
         db.
             collection(DatabaseConstants.WORKER_REQUESTS_COLLECTION)
@@ -81,6 +140,7 @@ class CreateWorkerRequestViewModel : ViewModel() {
 
         db
             .collection(DatabaseConstants.WORKER_OPTIONS_COLLECTION)
+            .whereEqualTo("locationId",currentLocation.id)
             .get()
             .addOnSuccessListener { collection ->
                 val list = ArrayList<WorkerOption>()

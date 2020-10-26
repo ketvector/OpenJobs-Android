@@ -55,7 +55,13 @@ class SelectWorkerListAdapter : RecyclerView.Adapter<SelectWorkerListAdapter.Vie
 
         private fun getPriceText(workerOption: WorkerOption?) : String?{
             workerOption?.let {
-               return it.price.toString() + "/" + it.unit
+                if(it.price > 0){
+                    return it.price.toString() + "/" + it.unit
+                }
+                else{
+                    return it.unit
+                }
+
             }
             return null
         }

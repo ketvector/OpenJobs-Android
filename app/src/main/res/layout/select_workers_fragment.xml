@@ -7,14 +7,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".SelectWorkersFragment">
 
-
     <TextView
         android:id="@+id/pageHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/find_workers_easy_title"
-        android:textSize="32sp"
+        android:textAppearance="?attr/textAppearanceHeadline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +34,13 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="16dp"
+        android:layout_height="0dp"/>
+
+
 
 
     <com.google.android.material.button.MaterialButton

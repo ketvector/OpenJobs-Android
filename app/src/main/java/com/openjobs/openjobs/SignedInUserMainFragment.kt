@@ -44,7 +44,7 @@ class SignedInUserMainFragment : Fragment(), View.OnClickListener, WorkerRequest
                 emptyView.visibility = View.GONE
             }
             if(!(activity?.application as MyApplication).hasSeenSearchSreen && emptyView.visibility == View.VISIBLE){
-                val action = SignedInUserMainFragmentDirections.actionSignedInUserMainFragmentToSelectWorkersFragment()
+                val action = SignedInUserMainFragmentDirections.actionSignedInUserMainFragmentToSearchContextFragment()
                 findNavController().navigate(action)
             }
             (activity?.application as MyApplication).hasSeenSearchSreen = true
@@ -61,7 +61,7 @@ class SignedInUserMainFragment : Fragment(), View.OnClickListener, WorkerRequest
 
     override fun onClick(v: View?) {
         if(v?.id == fab.id){
-            val action = SignedInUserMainFragmentDirections.actionSignedInUserMainFragmentToSelectWorkersFragment()
+            val action = SignedInUserMainFragmentDirections.actionSignedInUserMainFragmentToSearchContextFragment()
             findNavController().navigate(action)
         }
     }

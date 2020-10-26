@@ -8,5 +8,8 @@ data class WorkerRequest(
     var requestState : String? = null,
     var date : Date = Date(),
     var address : String? = null,
-    var listOfWorkerOptions : Map<String,Int>? = null
+    var listOfWorkerOptions : Map<String,Int>? = null,
+    var shortDescription : String? = null,
+    var meetMessage : String? = null,
+    var additionalMessage : String ? = null
 )

@@ -6,6 +6,7 @@ object DatabaseConstants {
     val USER_PROFILE_COLLECTION = "userProfileCollection"
     val WORKER_OPTIONS_COLLECTION = "workerOptionsCollection"
     val WORKER_TYPES_COLLECTION = "workerTypesCollection"
+    val SIMPLE_LOCATIONS_COLLECTION = "simpleLocationsCollection"
 
     val WORKER_REQUESTS_STATE_APPLIED = "applied"
     val WORKER_REQUESTS_STATE_PENDING = "pending"

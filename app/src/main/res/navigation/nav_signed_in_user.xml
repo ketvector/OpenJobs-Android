@@ -11,8 +11,8 @@
         android:label="SignedInUserMainFragment"
         tools:layout="@layout/signed_in_user_main_fragment">
         <action
-            android:id="@+id/action_signedInUserMainFragment_to_selectWorkersFragment"
-            app:destination="@id/selectWorkersFragment" />
+            android:id="@+id/action_signedInUserMainFragment_to_searchContextFragment"
+            app:destination="@id/searchContextFragment" />
     </fragment>
     <fragment
         android:id="@+id/confirmationFragment"
@@ -64,6 +64,15 @@
         <action
             android:id="@+id/action_selectWorkersFragment_to_addDetailsFragment"
             app:destination="@id/addDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchContextFragment"
+        android:name="com.openjobs.openjobs.SearchContextFragment"
+        android:label="search_context_fragment"
+        tools:layout="@layout/search_context_fragment" >
+        <action
+            android:id="@+id/action_searchContextFragment_to_selectWorkersFragment"
+            app:destination="@id/selectWorkersFragment" />
     </fragment>
 
 

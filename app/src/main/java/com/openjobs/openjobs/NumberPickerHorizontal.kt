@@ -32,6 +32,7 @@ class HorizontalNumberPicker(context: Context?, @Nullable attrs: AttributeSet?) 
                 newValue = max
             }
             et_number!!.setText(newValue.toString())
+            listener?.onCountChanged(newValue)
         }
 
     }
@@ -43,9 +44,8 @@ class HorizontalNumberPicker(context: Context?, @Nullable attrs: AttributeSet?) 
         get() {
             if (et_number != null) {
                 try {
-                    val value = et_number.text.toString().toInt()
-                    listener?.onCountChanged(value)
-                    return value
+                    val valueCurrent = et_number.text.toString().toInt()
+                    return valueCurrent
                 } catch (ex: NumberFormatException) {
                     Log.e("HorizontalNumberPicker", ex.toString())
                 }
