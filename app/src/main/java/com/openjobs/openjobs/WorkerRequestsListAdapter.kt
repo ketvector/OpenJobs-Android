@@ -12,15 +12,15 @@ import java.util.*
 class WorkerRequestsListAdapter(val onClickListener: WorkerRequestCardClickListener) : RecyclerView.Adapter<WorkerRequestsListAdapter.ViewHolder>() {
 
     private var workerRequestList : List<WorkerRequestDocumentWrapper>? = null
-    private var idToNameMap : Map<String,String>? = null
+    private var availableWorkerOption : List<WorkerOption>? = null
 
     fun setList(list : List<WorkerRequestDocumentWrapper>){
         workerRequestList = list
         notifyDataSetChanged()
     }
 
-    fun setIdToNameMap(map : Map<String,String>){
-        idToNameMap = map
+    fun setAvailableWorkerOptions(workerOptions : List<WorkerOption>){
+        availableWorkerOption = workerOptions
         notifyDataSetChanged()
     }
 
@@ -37,16 +37,16 @@ class WorkerRequestsListAdapter(val onClickListener: WorkerRequestCardClickListe
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(workerRequestList?.get(position),idToNameMap)
+        holder.bind(workerRequestList?.get(position),availableWorkerOption)
     }
 
     class ViewHolder(itemView: View,
                      val onClickListener: WorkerRequestCardClickListener) : RecyclerView.ViewHolder(itemView) {
 
-        var idToNameMap : Map<String,String>? = null
+        var availableWorkerOptions : List<WorkerOption>? = null
 
-        fun bind(workerRequestWrapper: WorkerRequestDocumentWrapper?, idToNameMap : Map<String,String>?) {
-            this.idToNameMap = idToNameMap
+        fun bind(workerRequestWrapper: WorkerRequestDocumentWrapper?, workerOptions : List<WorkerOption>?) {
+            this.availableWorkerOptions = workerOptions
             val workerRequest = workerRequestWrapper?.workerRequest
             if(isDeletable(workerRequest)){
                 itemView.deleteButton.visibility = View.VISIBLE
@@ -76,13 +76,38 @@ class WorkerRequestsListAdapter(val onClickListener: WorkerRequestCardClickListe
                 val builder = StringBuilder()
                 if (selections != null) {
                     for((id,count) in selections){
-                        idToNameMap?.let {
-                            val name = it[id]
-                            builder.append(name + ": " + count + "\n")
+                        if(count > 0){
+                            val workerOption = findWorkerOptionForId(id)
+                            workerOption?.let { option ->
+                                builder.append(option.label + ": " + count + getRateMessage(option) + "\n" )
+                            }
                         }
+
                     }
                 }
                 return builder.toString()
+            }
+            return null
+        }
+
+        private fun getRateMessage(workerOption: WorkerOption) : String{
+            if(workerOption.price > 0){
+                return " (at Rs " + workerOption.price + "/" + workerOption.unit.toString() + " per worker)"
+            }
+            else {
+                return workerOption.unit?:""
+            }
+
+        }
+
+        private fun findWorkerOptionForId(id : String) : WorkerOption?{
+            availableWorkerOptions?.let {options ->
+                for(option in options){
+                    if(option.id == id){
+                        return option
+                    }
+                }
+
             }
             return null
         }

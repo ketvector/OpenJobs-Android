@@ -15,7 +15,7 @@ class SignedInUserMainViewModel : ViewModel() {
     val TAG = "SignedInUserMainViewModel"
     val listOfWorkerRequests = MutableLiveData<List<WorkerRequestDocumentWrapper>>()
     var requestListener : ListenerRegistration? = null
-    var mapIdToName = MutableLiveData<MutableMap<String,String>>()
+    var availableWorkerOptions = MutableLiveData<List<WorkerOption>>()
 
     @SuppressLint("LongLogTag")
     fun getWorkerRequestsForThisUser(){
@@ -60,12 +60,12 @@ class SignedInUserMainViewModel : ViewModel() {
             .collection(DatabaseConstants.WORKER_OPTIONS_COLLECTION)
             .get()
             .addOnSuccessListener {collection ->
-                val map = mutableMapOf<String,String>()
+                val list = ArrayList<WorkerOption>()
                 for(document in collection){
                     val workerOption = document.toObject<WorkerOption>()
-                    map[workerOption.id] = workerOption.label
+                    list.add(workerOption)
                 }
-                mapIdToName.value = map
+                availableWorkerOptions.value = list
             }
             .addOnFailureListener { e -> Log.e(TAG,e.toString()) }
     }

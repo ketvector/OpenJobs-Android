@@ -141,13 +141,26 @@ class CreateWorkerRequestViewModel : ViewModel() {
         db
             .collection(DatabaseConstants.WORKER_OPTIONS_COLLECTION)
             .whereEqualTo("locationId",currentLocation.id)
+            .orderBy("label")
             .get()
             .addOnSuccessListener { collection ->
-                val list = ArrayList<WorkerOption>()
+                val mainList = ArrayList<WorkerOption>()
+                val topList = ArrayList<WorkerOption>()
+                val bottomList = ArrayList<WorkerOption>()
+
                 for(document in collection){
-                    list.add(document.toObject<WorkerOption>())
+                    val workerOption = document.toObject<WorkerOption>()
+                    if(workerOption.showAtTop){
+                        topList.add(workerOption)
+                    }else if(workerOption.showAtBottom){
+                        bottomList.add(workerOption)
+                    }else{
+                        mainList.add(workerOption)
+                    }
                 }
-                workerOptionsList.value = list
+
+                val finalList = topList + mainList + bottomList
+                workerOptionsList.value = finalList
             }
             .addOnFailureListener { e -> Log.e(TAG, e.toString()) }
 

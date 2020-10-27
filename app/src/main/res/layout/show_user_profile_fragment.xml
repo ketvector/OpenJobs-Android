@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Your Profile"
-        android:textSize="24sp"
+        android:textAppearance="?attr/textAppearanceHeadline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:text="Phone Number"
-        android:textSize="16dp"
+        android:textAppearance="?attr/textAppearanceHeadline5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:textSize="20sp"
+        android:textAppearance="?attr/textAppearanceBody1"
         android:text="Click edit button below to set"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneLabel" />
@@ -57,7 +57,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:text="Name"
-        android:textSize="16dp"
+        android:textAppearance="?attr/textAppearanceHeadline5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
 
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:textSize="20sp"
+        android:textAppearance="?attr/textAppearanceBody1"
         android:text="Click edit button below to set"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameLabel" />
@@ -79,7 +79,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:text="Address"
-        android:textSize="16dp"
+        android:textAppearance="?attr/textAppearanceHeadline5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:textSize="20sp"
+        android:textAppearance="?attr/textAppearanceBody1"
         android:text="Click edit button below to set"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addressLabel" />
@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="274dp"
+        android:layout_marginEnd="24dp"
         android:text="Edit Profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

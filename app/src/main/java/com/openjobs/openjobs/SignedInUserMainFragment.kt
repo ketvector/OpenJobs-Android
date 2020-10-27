@@ -50,8 +50,8 @@ class SignedInUserMainFragment : Fragment(), View.OnClickListener, WorkerRequest
             (activity?.application as MyApplication).hasSeenSearchSreen = true
 
         })
-        viewModel.mapIdToName.observe(viewLifecycleOwner, Observer {
-            workerRequestListAdapter.setIdToNameMap(it)
+        viewModel.availableWorkerOptions.observe(viewLifecycleOwner, Observer {
+            workerRequestListAdapter.setAvailableWorkerOptions(it)
         })
 
         viewModel.getIdToNameMap()
